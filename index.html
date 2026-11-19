@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Atento × Cốc Cốc — Chương trình đào tạo AI 2 buổi</title>
+<meta name="description" content="Chương trình đào tạo AI 2 buổi cho Cốc Cốc: buổi 1 vận hành và office, buổi 2 dựng app báo giá bằng Claude Code rồi đưa lên mạng.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Atento × Cốc Cốc — Chương trình đào tạo AI 2 buổi">
+<meta property="og:description" content="Buổi 1: vận hành và office. Buổi 2: dựng app báo giá bằng Claude Code và đưa lên mạng.">
+<meta name="theme-color" content="#25AF50">
+<style>
+  :root {
+    --green: #25AF50;
+    --green-dark: #1b8a3d;
+    --ink: #14231a;
+    --muted: #5a6b60;
+    --line: #dfe8e2;
+    --bg: #ffffff;
+    --soft: #f3f8f5;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #eaf3ed;
+      --muted: #9db0a4;
+      --line: #25352b;
+      --bg: #0e1812;
+      --soft: #142119;
+      --green: #3bc96a;
+      --green-dark: #5fdc88;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    margin: 0;
+    font-family: "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.65;
+  }
+  a { color: var(--green-dark); }
+  .skip {
+    position: absolute; left: -9999px; top: 8px;
+    background: var(--green); color: #fff; padding: 8px 14px; border-radius: 6px; z-index: 100;
+  }
+  .skip:focus { left: 8px; }
+  :focus-visible { outline: 3px solid var(--green); outline-offset: 2px; }
+
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: var(--bg); border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 1040px; margin: 0 auto; padding: 12px 24px;
+    display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+  }
+  .brand { font-weight: 700; color: var(--ink); text-decoration: none; margin-right: auto; }
+  .nav a.link { color: var(--muted); text-decoration: none; font-size: .95rem; }
+  .nav a.link:hover { color: var(--green-dark); }
+  .btn {
+    display: inline-block; background: var(--green); color: #fff !important;
+    text-decoration: none; padding: 8px 16px; border-radius: 8px; font-weight: 600; font-size: .95rem;
+  }
+  .btn:hover { background: var(--green-dark); }
+
+  main { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  .hero { padding: 88px 0 72px; }
+  .kicker { color: var(--green-dark); font-weight: 600; margin: 0 0 12px; }
+  .hero h1 { font-size: clamp(2.6rem, 8vw, 5rem); line-height: 1.05; margin: 0 0 20px; letter-spacing: -.02em; }
+  .hero p.lead { font-size: 1.2rem; color: var(--muted); max-width: 34em; margin: 0; }
+
+  section { padding: 64px 0; border-top: 1px solid var(--line); }
+  .sec-no { color: var(--green-dark); font-weight: 600; margin: 0 0 8px; }
+  section h2 { font-size: clamp(1.6rem, 4vw, 2.3rem); line-height: 1.2; margin: 0 0 12px; letter-spacing: -.01em; }
+  .sec-intro { color: var(--muted); max-width: 40em; margin: 0 0 32px; }
+
+  .problems { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .problem { background: var(--soft); border-radius: 12px; padding: 20px 22px; }
+  .problem .n { color: var(--green-dark); font-weight: 700; font-size: .9rem; }
+  .problem h3 { margin: 4px 0 8px; font-size: 1.1rem; }
+  .problem p { margin: 0; color: var(--muted); font-size: .95rem; }
+
+  .group { margin: 36px 0 12px; font-weight: 700; color: var(--green-dark); }
+  .items { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .item {
+    display: grid; grid-template-columns: 48px 1fr; gap: 4px 16px;
+    padding: 20px 0; border-bottom: 1px solid var(--line);
+  }
+  .item .n { color: var(--green-dark); font-weight: 700; padding-top: 2px; }
+  .item h3 { margin: 0 0 4px; font-size: 1.15rem; }
+  .item p { margin: 0 0 8px; color: var(--muted); }
+  .item .links a { margin-right: 16px; font-weight: 600; text-decoration: none; }
+  .item .links a:hover { text-decoration: underline; }
+
+  .demos { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 8px; }
+  .demos a {
+    border: 1px solid var(--green); color: var(--green-dark); text-decoration: none;
+    padding: 8px 14px; border-radius: 999px; font-weight: 600; font-size: .95rem;
+  }
+  .demos a:hover { background: var(--green); color: #fff; }
+
+  footer { border-top: 1px solid var(--line); padding: 32px 24px; text-align: center; color: var(--muted); }
+
+  @media (max-width: 560px) {
+    .item { grid-template-columns: 36px 1fr; }
+    .hero { padding: 56px 0 48px; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body id="top">
+<a class="skip" href="#main">Bỏ qua điều hướng</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#top">Atento × Cốc Cốc</a>
+    <nav aria-label="Điều hướng chính" style="display:flex;gap:20px;flex-wrap:wrap">
+      <a class="link" href="#problem">Vấn đề</a>
+      <a class="link" href="#b1">Buổi 1</a>
+      <a class="link" href="#b2">Buổi 2</a>
+    </nav>
+    <a class="btn" href="#b2">Apps ↓</a>
+  </div>
+</header>
+
+<main id="main">
+  <div class="hero">
+    <p class="kicker">Chương trình đào tạo · tháng 11.2026</p>
+    <h1>AI for Business</h1>
+    <p class="lead">Dùng AI cho công việc hằng ngày: báo cáo, lead, nội dung.<br>Tự xây dựng một sản phẩm nhỏ với Claude Code.</p>
+  </div>
+
+  <!-- VẤN ĐỀ -->
+  <section id="problem">
+    <p class="sec-no">01 Vấn đề</p>
+    <h2>Năm nhóm việc Cốc Cốc cần AI hỗ trợ.</h2>
+    <div class="problems" style="margin-top:32px">
+      <article class="problem">
+        <span class="n">01</span>
+        <h3>Xử lý dữ liệu &amp; tự động hoá báo cáo</h3>
+        <p>Chuẩn hoá Excel/Sheets, công thức, hợp nhất đa nguồn; phân tích CRM theo kỳ, tìm bất thường; tự tạo slide, xuất báo cáo, gửi cảnh báo KPI.</p>
+      </article>
+      <article class="problem">
+        <span class="n">02</span>
+        <h3>Nghiên cứu thị trường &amp; làm giàu dữ liệu khách hàng</h3>
+        <p>Xu hướng ngành, đối thủ; người phụ trách, thông tin liên hệ, lịch sử quảng cáo và khuyến mãi.</p>
+      </article>
+      <article class="problem">
+        <span class="n">03</span>
+        <h3>Luồng công việc &amp; tự động vận hành</h3>
+        <p>Phân loại, điều phối lead theo ưu tiên; nhắc lịch, khảo sát, chuỗi chăm sóc.</p>
+      </article>
+      <article class="problem">
+        <span class="n">04</span>
+        <h3>Sáng tạo nội dung</h3>
+        <p>Nội dung đa kênh theo brief; văn phong theo bộ quy chuẩn kiểm duyệt; giọng đọc AI, kịch bản, video ngắn.</p>
+      </article>
+      <article class="problem">
+        <span class="n">05</span>
+        <h3>Social listening</h3>
+        <p>Tự động nghe thương hiệu Cốc Cốc trên báo chí, diễn đàn, mạng xã hội.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- BUỔI 1 -->
+  <section id="b1">
+    <p class="sec-no">02 Buổi 1</p>
+    <h2>Vận hành &amp; Office</h2>
+    <p class="sec-intro">Ba phần: kiến thức nền, xử lý dữ liệu đến báo cáo, và từ hồ sơ khách hàng đến nội dung chăm sóc.</p>
+
+    <p class="group">Phần 0 · Lý thuyết</p>
+    <ol class="items">
+      <li class="item">
+        <span class="n">00</span>
+        <div>
+          <h3>Kiến thức nền tảng AI</h3>
+          <p>Context window, token, model, hallucination, prompting, dữ liệu, connector (MCP), skill, lịch chạy.</p>
+          <div class="links"><a href="https://coccoc.atento.vn/buoi-1/phan-0-ly-thuyet.html">Slide →</a></div>
+        </div>
+      </li>
+    </ol>
+
+    <p class="group">Phần 1 · Dữ liệu và báo cáo</p>
+    <ol class="items">
+      <li class="item">
+        <span class="n">01</span>
+        <div>
+          <h3>Xử lý dữ liệu</h3>
+          <p>Chuẩn hoá, làm sạch và hợp nhất dữ liệu Excel/Sheets; dùng AI viết công thức.</p>
+          <div class="links">
+            <a href="https://docs.google.com/spreadsheets/d/1dARO1J2OGSagmoZ187JQfr2WQtidJttJ-LOro7nSS48/edit?usp=sharing">Bài tập →</a>
+            <a href="https://docs.google.com/spreadsheets/d/1LKW7W6Jk0T4L22voSBBAUbNg4CW1WdXcZDNgjqqYTzY/edit?gid=0#gid=0">Demo →</a>
+          </div>
+        </div>
+      </li>
+      <li class="item">
+        <span class="n">02</span>
+        <div>
+          <h3>Phân tích và báo cáo</h3>
+          <p>Phân tích theo kỳ, tìm bất thường, xuất báo cáo và cảnh báo KPI.</p>
+          <div class="links"><a href="https://docs.google.com/spreadsheets/d/1LKW7W6Jk0T4L22voSBBAUbNg4CW1WdXcZDNgjqqYTzY/edit?gid=0#gid=0">Demo →</a></div>
+        </div>
+      </li>
+    </ol>
+
+    <p class="group">Phần 2 · Khách hàng và nội dung</p>
+    <ol class="items">
+      <li class="item">
+        <span class="n">03</span>
+        <div>
+          <h3>Nghiên cứu thị trường và làm giàu dữ liệu khách hàng</h3>
+          <p>Chia việc cho AI theo 6 bước, từ ICP đến danh sách doanh nghiệp đã làm giàu, có bằng chứng, mức ưu tiên và từ khoá gợi ý.</p>
+          <div class="links"><a href="https://docs.google.com/spreadsheets/d/1p9sIlo0y-YqP4MtCJdlPRLOpif8zpqkLVwBlASqZxV0/edit?usp=drive_link">Demo →</a></div>
+        </div>
+      </li>
+      <li class="item">
+        <span class="n">04</span>
+        <div>
+          <h3>Điều phối lead và chăm sóc khách hàng</h3>
+          <p>Phân loại lead theo ưu tiên; nhắc lịch, khảo sát, chuỗi chăm sóc.</p>
+          <div class="links"><a href="https://docs.google.com/spreadsheets/d/1LKW7W6Jk0T4L22voSBBAUbNg4CW1WdXcZDNgjqqYTzY/edit?gid=0#gid=0">Demo →</a></div>
+        </div>
+      </li>
+      <li class="item">
+        <span class="n">05</span>
+        <div>
+          <h3>Video ngắn đúng chất Cốc Cốc</h3>
+          <p>Hai loại video AI với Claude và Google Flow, dùng brand guidelines cho đúng chất Cốc Cốc, giọng đọc tiếng Việt bằng VieNeu-TTS.</p>
+          <div class="links"><a href="https://coccoc.atento.vn/buoi-1/phan-5-noi-dung-da-kenh.html">Slide →</a></div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- BUỔI 2 -->
+  <section id="b2">
+    <p class="sec-no">03 Buổi 2</p>
+    <h2>Claude Code: từ bảng giá đến tờ báo giá in được</h2>
+    <p class="sec-intro">Ba phần: lý thuyết Claude Code, dựng app báo giá bằng một file HTML rồi đưa lên Internet, và kiến trúc của một website.</p>
+
+    <div class="demos">
+      <a href="https://coccoc.atento.vn/buoi-2/mau/app-hoan-chinh.html">App báo giá ↗</a>
+      <a href="https://coccoc.atento.vn/buoi-2/mau/bao-cao-chien-dich.html">Báo cáo chiến dịch ↗</a>
+      <a href="https://coccoc.atento.vn/buoi-2/mau/media-plan.html">Media plan ↗</a>
+      <a href="https://coccoc.atento.vn/buoi-2/mau/xem-truoc-quang-cao.html">Xem trước quảng cáo ↗</a>
+      <a href="https://coccoc.atento.vn/crm">App CRM ↗</a>
+    </div>
+
+    <p class="group">Phần 0 · Lý thuyết</p>
+    <ol class="items">
+      <li class="item">
+        <span class="n">00</span>
+        <div>
+          <h3>Agentic AI</h3>
+          <p>AI Agent khác AI Chat thế nào, vòng lặp nghĩ, làm, xem của agent, harness là gì, và giao việc cho agent ra sao.</p>
+          <div class="links"><a href="https://coccoc.atento.vn/buoi-2/phan-0-agentic-ai.html">Slide →</a></div>
+        </div>
+      </li>
+      <li class="item">
+        <span class="n">01</span>
+        <div>
+          <h3>Claude Code</h3>
+          <p>Claude Code khác Chat thế nào, cách nó làm việc, thư mục dự án và CLAUDE.md, cài đặt, vòng lặp giao việc bốn bước.</p>
+          <div class="links"><a href="https://coccoc.atento.vn/buoi-2/phan-0-claude-code.html">Slide →</a></div>
+        </div>
+      </li>
+    </ol>
+
+    <p class="group">Phần 1 · Build apps</p>
+    <ol class="items">
+      <li class="item">
+        <span class="n">02</span>
+        <div>
+          <h3>Build HTML apps</h3>
+          <p>Dựng app báo giá trong một file HTML: nạp bảng giá CSV, tính thành tiền, chiết khấu theo bậc và trần, in một trang A4.</p>
+          <div class="links"><a href="https://coccoc.atento.vn/buoi-2/phan-1-build-apps.html">Slide →</a></div>
+        </div>
+      </li>
+      <li class="item">
+        <span class="n">03</span>
+        <div>
+          <h3>Publish apps to the Internet</h3>
+          <p>Đưa app lên GitHub Pages để có một link gửi khách, kiểm trước khi gửi, sửa và cập nhật về sau.</p>
+          <div class="links"><a href="https://coccoc.atento.vn/buoi-2/phan-1-build-apps.html#13">Slide →</a></div>
+        </div>
+      </li>
+    </ol>
+
+    <p class="group">Phần 2 · Advanced</p>
+    <ol class="items">
+      <li class="item">
+        <span class="n">04</span>
+        <div>
+          <h3>Kiến trúc của một website</h3>
+          <p>Tên miền, DNS, hosting, HTML/CSS/JS, bốn tầng FE/API/BE/DB, và khi nào một file HTML không còn đủ cho cả team.</p>
+          <div class="links"><a href="https://coccoc.atento.vn/buoi-2/phan-2-kien-truc.html">Slide →</a></div>
+        </div>
+      </li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  <a href="mailto:admin@atento.vn">admin@atento.vn</a>
+</footer>
+</body>
+</html>
